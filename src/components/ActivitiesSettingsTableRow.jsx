@@ -80,7 +80,7 @@ function ActivitiesSettingsTableRow({ activity, create = false, object_id = 0, u
         data.append('activity', activity.id)
         data.append('image_id', id)
 
-        await fetch('https://report.turbobroker.ru/report/upload-activity-images', {
+        await fetch('https://report.turbobroker.ru/report/del-activity-image', {
             method: 'POST',
             body: data,
         }).then(res => res.json())
@@ -101,12 +101,16 @@ function ActivitiesSettingsTableRow({ activity, create = false, object_id = 0, u
             data.append('files[]', file, file.name);
         }
         data.append('activity', activity.id)
-        await fetch('https://report.turbobroker.ru/report/upload-activity-images', {
-            method: 'POST',
-            body: data,
-        }).then(res => res.json())
-            .then(data => setImages(data.images))
-        setImages_disabled(false);
+        try {
+            await fetch('https://report.turbobroker.ru/report/upload-activity-images', {
+                method: 'POST',
+                body: data,
+            }).then(res => res.json())
+                .then(data => setImages(data.images))
+            setImages_disabled(false);
+        } catch (e) {
+            // console
+        }
     }
 
     const {
@@ -179,9 +183,27 @@ function ActivitiesSettingsTableRow({ activity, create = false, object_id = 0, u
 
         setStatus_open(false);
     };
-    const activeSwitchHandle = (e) => {
+    const activeSwitchHandle = async (e) => {
         // console.log(e)
+        let data = new FormData();
+
+        data.append('activity', activity.id)
+        data.append('status', e ? 1 : 0)
+        try {
+            await fetch('https://report.turbobroker.ru/report/set-activity-active', {
+                method: 'POST',
+                body: data,
+            }).then(res => res.json())
+            // .then(data => setImages(data.images))
+            // setImages_disabled(false);
+        } catch (e) {
+            // console
+        }
+
+
         setActive(e)
+
+
 
     }
 
@@ -221,6 +243,7 @@ function ActivitiesSettingsTableRow({ activity, create = false, object_id = 0, u
                         }}
                         render={({ field: { ref, ...rest } }) => (
                             <TextField
+                            label="Название"
                                 // color="warning"
                                 id="outlined-multiline-flexible"
                                 defaultValue={activity.name}
@@ -267,6 +290,7 @@ function ActivitiesSettingsTableRow({ activity, create = false, object_id = 0, u
                         }}
                         render={({ field: { ref, ...rest } }) => (
                             <TextField
+                            label="Расход"
                                 id="outlined-multiline-flexible"
                                 defaultValue={activity.price}
                                 fullWidth
@@ -306,6 +330,7 @@ function ActivitiesSettingsTableRow({ activity, create = false, object_id = 0, u
                                 // color="warning"
                                 // id="outlined-multiline-flexible"
                                 defaultValue={status}
+                                label="Статус"
                                 value={status}
                                 fullWidth
                                 {...rest}
@@ -313,6 +338,7 @@ function ActivitiesSettingsTableRow({ activity, create = false, object_id = 0, u
                                 {statuses.map((option, index) => (
                                     <MenuItem
                                         value={option.id}
+                                        
                                         key={'select_' + option.name}
                                         // disabled={index === 2}
 
@@ -392,6 +418,7 @@ function ActivitiesSettingsTableRow({ activity, create = false, object_id = 0, u
 
                     <Controller
                         name="date"
+                        
                         control={control}
                         defaultValue={activity.date}
                         rules={{
@@ -405,6 +432,7 @@ function ActivitiesSettingsTableRow({ activity, create = false, object_id = 0, u
                         render={({ field: { ref, ...rest } }) => (
                             // <DatePicker />
                             <Input
+                            label="Дата"
                                 defaultValue={activity.date}
                                 type="date"
                                 {...rest}
@@ -461,6 +489,7 @@ function ActivitiesSettingsTableRow({ activity, create = false, object_id = 0, u
                                 id="outlined-multiline-flexible"
                                 // label="Инфо по расклейке"
                                 // placeholder='Инфо по расклейке'
+                                label="Текст"
                                 rows={14}
                                 // value={activity.text}
                                 // onChange={(e) => setAdsResult(e.target.value)}
@@ -507,6 +536,7 @@ function ActivitiesSettingsTableRow({ activity, create = false, object_id = 0, u
                                                 position="top"
                                                 actionIcon={
                                                     <IconButton
+                                                        onClick={() => delImage(item.id)}
                                                         sx={{ color: 'red' }}
                                                         aria-label={`del ${item.title}`}
                                                     >

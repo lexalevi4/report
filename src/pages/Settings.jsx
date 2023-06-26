@@ -1,11 +1,13 @@
-import { Box, Button, Divider, Grid, Input, Table, TableBody, TableCell, TableContainer, TableRow, TextField, Typography } from "@mui/material";
+import { Box, Button, Divider, Grid, TextField, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Object from "../components/Object";
-import Slider from '@mui/joy/Slider';
+
 import Stats from "../components/Stats";
 import ClientsTable from "../components/ClientsTable";
 import ActivitiesSettings from "../components/ActivitiesSettings";
+import Prices from "../components/Prices";
+import Summary from "../components/Summary";
 
 function Settings() {
 
@@ -46,6 +48,7 @@ function Settings() {
         )
 
     }
+    console.log(data.object.price)
 
 
 
@@ -88,194 +91,26 @@ function Settings() {
                         basic_activities={data.object.activities}
                         object_id={data.object.object_id}
                     />
-                    <Divider
-                        className="my-10"
+                    <Prices
+                        price={data.object.price}
+                        object_id={data.object.object_id}
+                        price_min={data.object.price_min}
+                        price_max={data.object.price_max}
+                        price_low={data.object.price_low}
+                        price_high={data.object.price_high}
                     />
-                    <Typography
-                        className="my-10"
-                        style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                        }}
 
-                        variant='h5'
-                    >
-                        Цена
-                    </Typography>
+
+                    <Summary
+                        report_plans={data.object.report_plans}
+                        report_recomendations={data.object.report_recomendations}
+                        report_result={data.object.report_result}
+                        object_id={data.object.object_id}
+                    />
+
                     <Box
-                        className="mt-10"
-
-                    >
-                        <TableContainer>
-                            <Table>
-                                <TableBody>
-                                    <TableRow>
-                                        <TableCell
-                                            width={'50%'}
-                                        >
-                                            <TableContainer>
-                                                <Table>
-                                                    <TableBody>
-                                                        <TableRow>
-                                                            <TableCell>
-                                                                <Typography>
-                                                                    Конец
-                                                                </Typography>
-                                                            </TableCell>
-                                                            <TableCell>
-                                                                <TextField
-                                                                    value={15500000}
-                                                                // onChange={(e) => setAdsResult(e.target.value)}
-                                                                />
-                                                            </TableCell>
-                                                        </TableRow>
-                                                        <TableRow>
-                                                            <TableCell>
-                                                                <Typography>
-                                                                    Верхняя граница диапазона
-                                                                </Typography>
-                                                            </TableCell>
-                                                            <TableCell>
-                                                                <TextField
-                                                                    value={14500000}
-                                                                // onChange={(e) => setAdsResult(e.target.value)}
-                                                                />
-                                                            </TableCell>
-                                                        </TableRow>
-                                                        <TableRow>
-                                                            <TableCell>
-                                                                <Typography>
-                                                                    Значение
-                                                                </Typography>
-                                                            </TableCell>
-                                                            <TableCell>
-                                                                <TextField
-                                                                    value={13250000}
-                                                                // onChange={(e) => setAdsResult(e.target.value)}
-                                                                />
-                                                            </TableCell>
-                                                        </TableRow>
-                                                        <TableRow>
-                                                            <TableCell>
-                                                                <Typography>
-                                                                    Нижняя граница диапазона
-                                                                </Typography>
-                                                            </TableCell>
-                                                            <TableCell>
-                                                                <TextField
-                                                                    value={12500000}
-                                                                // onChange={(e) => setAdsResult(e.target.value)}
-                                                                />
-                                                            </TableCell>
-                                                        </TableRow>
-                                                        <TableRow>
-                                                            <TableCell>
-                                                                <Typography>
-                                                                    Начало
-                                                                </Typography>
-                                                            </TableCell>
-                                                            <TableCell>
-                                                                <TextField
-                                                                    value={11500000}
-                                                                // onChange={(e) => setAdsResult(e.target.value)}
-                                                                />
-                                                            </TableCell>
-
-                                                        </TableRow>
-                                                        <TableRow>
-                                                            <TableCell>
-
-                                                            </TableCell>
-                                                            <TableCell>
-                                                                <Button
-                                                                    variant="contained"
-                                                                >
-                                                                    Сохранить
-                                                                </Button>
-                                                            </TableCell>
-
-                                                        </TableRow>
-                                                    </TableBody>
-                                                </Table>
-                                            </TableContainer>
-
-
-
-                                        </TableCell>
-                                        <TableCell
-                                            width={'50%'}
-                                        >
-                                            <Slider
-                                                // width='80%'
-
-                                                marks={[
-                                                    {
-                                                        value: 12500000,
-                                                        label: '12 500 000',
-                                                    },
-                                                    {
-                                                        value: 14500000,
-                                                        label: '14 500 000',
-                                                    },
-                                                ]}
-                                                valueLabelFormat={(val) => {
-                                                    return val.toLocaleString()
-
-                                                }}
-                                                track={false}
-                                                step={50000}
-                                                min={11500000}
-                                                max={15500000}
-                                                size={'lg'}
-                                                // track="inverted"
-                                                valueLabelDisplay="on"
-                                                // aria-labelledby="track-inverted-range-slider"
-                                                // getAriaValueText={valueText}
-                                                defaultValue={13250000}
-                                            // marks={marks}
-                                            />
-
-                                        </TableCell>
-                                    </TableRow>
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
-
-                    </Box>
-
-                    <Grid
-                        className="sm:flex sm:max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 sm:items-center sm:justify-between bg-white p-6"
-                    >
-                        <Grid item className="sm:flex sm:flex-col sm:items-center sm:justify-center sm:space-y-4 md:w-4/12">
-
-                            <div className="sm:flex">
-                                <img src="https://educlever.beplusthemes.com/university/wp-content/uploads/2018/11/forma4.png" alt="" />
-                            </div>
-                            <Typography className="sm:flex text-xl font-bold">Lorem ipsum dolor sit</Typography>
-                            <Typography className="sm:flex sm:text-center">Lorem ipsum dolor sit amet, conse ct amet, conse adipiscing elit dolor sit a amet, conse adipisci</Typography>
-
-                        </Grid>
-                        <Grid item className="sm:flex sm:flex-col sm:items-center sm:justify-center sm:space-y-4 md:w-4/12">
-
-                            <div className="sm:flex">
-                                <img src="https://educlever.beplusthemes.com/university/wp-content/uploads/2018/11/forma3.png" alt="" />
-                            </div>
-                            <Typography className="sm:flex text-xl font-bold">Lorem ipsum dolor sit</Typography>
-                            <Typography className="sm:flex sm:text-center">Lorem ipsum dolor sit amet, conse ct amet, conse adipiscing elit dolor sit a amet, conse adipisci</Typography>
-
-                        </Grid>
-                        <Grid item className="sm:flex sm:flex-col sm:items-center sm:justify-center sm:space-y-4 md:w-4/12">
-
-                            <div className="sm:flex">
-                                <img src="https://educlever.beplusthemes.com/university/wp-content/uploads/2018/11/forma2.png" alt="" />
-                            </div>
-                            <Typography className="sm:flex text-xl font-bold">Lorem ipsum dolor sit</Typography>
-                            <Typography className="sm:flex sm:text-center">Lorem ipsum dolor sit amet, conse ct amet, conse adipiscing elit dolor sit a amet, conse adipisci</Typography>
-
-                        </Grid>
-
-                    </Grid>
+                        height={300}
+                    ></Box>
 
                 </Box>
             </Box >

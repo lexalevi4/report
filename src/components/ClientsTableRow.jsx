@@ -10,25 +10,42 @@ function ClientsTableRow({ item, index }) {
 
 
 
+    console.log(item)
 
 
     const statuses = [
-        'Неразобрано',
-        'Проявлен интерес',
-        'Назначен показ',
-        'Показ прошёл',
-        'Получено предложение',
-        'Аванс',
-        'Не интересно'
+        { name: 'Неразобрано', id: 0 },
+        { name: 'Проявлен интерес', id: 1 },
+        { name: 'Назначен показ', id: 2 },
+        { name: 'Показ прошёл', id: 3 },
+        { name: 'Получено предложение', id: 4 },
+        { name: 'Аванс', id: 5 },
+        { name: 'Не интересно', id: 6 },
     ]
 
     const [status_open, setStatus_open] = useState(false);
     const anchorRef = useRef(null);
-    const [selectedIndex, setSelectedIndex] = useState(item.status);
+    const [status, setStatus] = useState(item.status);
 
 
-    const handleMenuItemClick = (event, index) => {
-        setSelectedIndex(index);
+
+    const handleMenuItemClick = async (event, index) => {
+        setStatus(index);
+        let data = new FormData();
+
+        data.append('lead_id', item.lead_id)
+        data.append('object_id', item.object_id)
+        data.append('status', index)
+        try {
+            await fetch('https://report.turbobroker.ru/report/set-client-status', {
+                method: 'POST',
+                body: data,
+            }).then(res => res.json())
+            // .then(data => setImages(data.images))
+            // setImages_disabled(false);
+        } catch (e) {
+            // console
+        }
         setStatus_open(false);
     };
 
@@ -47,7 +64,7 @@ function ClientsTableRow({ item, index }) {
 
     const types = {
         'call_in': 'Входящий звонок',
-        'call_out': 'Изходящий звонок',
+        'call_out': 'Иcходящий звонок',
         'note': 'Примечание',
     }
     const [show_history, setShow_history] = useState(false)
@@ -66,7 +83,7 @@ function ClientsTableRow({ item, index }) {
 
 
                     <ButtonGroup variant="outlined" ref={anchorRef} aria-label="split button">
-                        <Button >{statuses[selectedIndex]}</Button>
+                        <Button >{statuses[status].name}</Button>
                         <Button
                             size="small"
                             aria-controls={status_open ? 'split-button-menu' : undefined}
@@ -103,13 +120,13 @@ function ClientsTableRow({ item, index }) {
                                         <MenuList id="split-button-menu" autoFocusItem>
                                             {statuses.map((option, index) => (
                                                 <MenuItem
-                                                    key={option}
+                                                    key={option.name}
                                                     // disabled={index === 2}
-                                                    
-                                                    selected={index === selectedIndex}
+
+                                                    selected={index === status}
                                                     onClick={(event) => handleMenuItemClick(event, index)}
                                                 >
-                                                    {option}
+                                                    {option.name}
                                                 </MenuItem>
                                             ))}
                                         </MenuList>

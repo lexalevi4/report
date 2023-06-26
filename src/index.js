@@ -4,9 +4,7 @@ import "dayjs/locale/ru";
 import App from './App';
 import { StyledEngineProvider } from '@mui/material/styles';
 import { BrowserRouter } from 'react-router-dom';
-import { LocalizationProvider, ruRU } from '@mui/x-date-pickers';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import dayjs from 'dayjs';
+
 // import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns'
 
 
@@ -14,15 +12,13 @@ import dayjs from 'dayjs';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   
-    <LocalizationProvider
-      adapterLocale={'ru'}
-      dateAdapter={AdapterDayjs}>
+    
       <StyledEngineProvider injectFirst>
         <BrowserRouter>
           <App />
         </BrowserRouter>
       </StyledEngineProvider>
-    </LocalizationProvider>
+    
   
 );
 

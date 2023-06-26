@@ -55,6 +55,10 @@ function Stats({ stats }) {
             return n !== null
         })
 
+        // console.log(avito_filtered)
+        // console.log(cian_filtered)
+        // console.log(yandex_filtered)
+
         let current_srcs = [];
         let current_views_series = []
         let current_calls_series = []
@@ -126,82 +130,88 @@ function Stats({ stats }) {
                 type: 'line',
                 smooth: true
             })
-            setSrcs(current_srcs);
-            setViews_series(current_views_series);
-            setCalls_series(current_calls_series);
-            setFav_series(current_fav_series);
+        }
 
-            let total_views = 0
-            let total_calls = 0
-            let total_fav = ''
+        console.log("тут")
+        console.log(current_srcs)
+        console.log(current_views_series)
+        console.log(current_calls_series)
+        setSrcs(current_srcs);
+        setViews_series(current_views_series);
+        setCalls_series(current_calls_series);
+        setFav_series(current_fav_series);
 
-
-            let current_table = [];
-            if (stats.total.avito_active) {
-                current_table.push({
-                    'src': "Авито",
-                    'link': stats.total.avito_url,
-                    'days': avito_filtered.length,
-                    'views': stats.total.avito_views_count,
-                    'calls': stats.total.avito_calls_count,
-                    'fav': stats.total.avito_favorites_count
-                })
-                total_views = total_views + Number(stats.total.avito_views_count)
-                total_calls = total_calls + Number(stats.total.avito_calls_count)
-                total_fav = Number(stats.total.avito_favorites_count)
-            }
-            if (stats.total.cian_active) {
-                current_table.push({
-                    'src': "Циан",
-                    'link': stats.total.cian_url,
-                    'days': cian_filtered.length,
-                    'views': stats.total.cian_views_count,
-                    'calls': stats.total.cian_calls_count,
-                    'fav': "Н/Д"
-                })
-                total_views = total_views + Number(stats.total.cian_views_count)
-                total_calls = total_calls + Number(stats.total.cian_calls_count)
-
-            }
-            if (stats.total.yandex_active) {
-                current_table.push({
-                    'src': "Яндекс",
-                    'link': stats.total.yandex_url,
-                    'days': yandex_filtered.length,
-                    'views': stats.total.yandex_views_count,
-                    'calls': stats.total.yandex_calls_count,
-                    'fav': "Н/Д"
-                })
-                total_views = total_views + Number(stats.total.yandex_views_count)
-                total_calls = total_calls + Number(stats.total.yandex_calls_count)
-            }
-            if (stats.total.domclick_active) {
-                current_table.push({
-                    'src': "Домклик",
-                    'days': "Н/Д",
-                    'link': stats.total.domclick_url,
-                    'views': stats.total.domclick_views_count,
-                    'calls': stats.total.domclick_calls_count,
-                    'fav': "Н/Д"
-                })
-                total_views = total_views + Number(stats.total.domclick_views_count)
-                total_calls = total_calls + Number(stats.total.domclick_calls_count)
-            }
-            if (stats.total.avito_active) {
-                current_table.push({
-                    'src': "Итого",
-                    'link': null,
-                    'views': total_views,
-                    'calls': total_calls,
-                    'fav': stats.total.avito_favorites_count
-                })
-            }
-
-            setTable_data(current_table)
+        let total_views = 0
+        let total_calls = 0
+        let total_fav = ''
 
 
+        let current_table = [];
+        if (stats.total.avito_active) {
+            current_table.push({
+                'src': "Авито",
+                'link': stats.total.avito_url,
+                'days': avito_filtered.length,
+                'views': stats.total.avito_views_count,
+                'calls': stats.total.avito_calls_count,
+                'fav': stats.total.avito_favorites_count
+            })
+            total_views = total_views + Number(stats.total.avito_views_count)
+            total_calls = total_calls + Number(stats.total.avito_calls_count)
+            total_fav = Number(stats.total.avito_favorites_count)
+        }
+        if (stats.total.cian_active) {
+            current_table.push({
+                'src': "Циан",
+                'link': stats.total.cian_url,
+                'days': cian_filtered.length,
+                'views': stats.total.cian_views_count,
+                'calls': stats.total.cian_calls_count,
+                'fav': "Н/Д"
+            })
+            total_views = total_views + Number(stats.total.cian_views_count)
+            total_calls = total_calls + Number(stats.total.cian_calls_count)
 
         }
+        if (stats.total.yandex_active) {
+            current_table.push({
+                'src': "Яндекс",
+                'link': stats.total.yandex_url,
+                'days': yandex_filtered.length,
+                'views': stats.total.yandex_views_count,
+                'calls': stats.total.yandex_calls_count,
+                'fav': "Н/Д"
+            })
+            total_views = total_views + Number(stats.total.yandex_views_count)
+            total_calls = total_calls + Number(stats.total.yandex_calls_count)
+        }
+        if (stats.total.domclick_active) {
+            current_table.push({
+                'src': "Домклик",
+                'days': "Н/Д",
+                'link': stats.total.domclick_url,
+                'views': stats.total.domclick_views_count,
+                'calls': stats.total.domclick_calls_count,
+                'fav': "Н/Д"
+            })
+            total_views = total_views + Number(stats.total.domclick_views_count)
+            total_calls = total_calls + Number(stats.total.domclick_calls_count)
+        }
+        if (stats.total.avito_active) {
+            current_table.push({
+                'src': "Итого",
+                'link': null,
+                'views': total_views,
+                'calls': total_calls,
+                'fav': stats.total.avito_favorites_count
+            })
+        }
+
+        setTable_data(current_table)
+
+
+
+
     }, [stats]
 
     )
@@ -260,6 +270,7 @@ function Stats({ stats }) {
 
     console.log(srcs)
     console.log(fav_data)
+    console.log(views_series)
 
     // if (stats.total.avito_id > 0) {
     //     table_stats.push({
