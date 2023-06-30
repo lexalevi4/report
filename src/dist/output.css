@@ -186,6 +186,10 @@
   position: static
 }
 
+.m-0 {
+  margin: 0px
+}
+
 .m-2 {
   margin: 0.5rem
 }
@@ -194,9 +198,19 @@
   margin: 0.75rem
 }
 
+.mx-2 {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem
+}
+
 .mx-auto {
   margin-left: auto;
   margin-right: auto
+}
+
+.my-0 {
+  margin-top: 0px;
+  margin-bottom: 0px
 }
 
 .my-10 {
@@ -212,6 +226,11 @@
 .my-5 {
   margin-top: 1.25rem;
   margin-bottom: 1.25rem
+}
+
+.my-8 {
+  margin-top: 2rem;
+  margin-bottom: 2rem
 }
 
 .mb-10 {
@@ -254,6 +273,10 @@
   align-items: center
 }
 
+.justify-center {
+  justify-content: center
+}
+
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity))
@@ -288,8 +311,20 @@
   padding-bottom: 0px
 }
 
+.pb-10 {
+  padding-bottom: 2.5rem
+}
+
 .pb-8 {
   padding-bottom: 2rem
+}
+
+.pt-5 {
+  padding-top: 1.25rem
+}
+
+.text-center {
+  text-align: center
 }
 
 .text-end {

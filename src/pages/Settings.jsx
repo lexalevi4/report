@@ -8,6 +8,7 @@ import ClientsTable from "../components/ClientsTable";
 import ActivitiesSettings from "../components/ActivitiesSettings";
 import Prices from "../components/Prices";
 import Summary from "../components/Summary";
+import Clients from "../components/Clients";
 
 function Settings() {
 
@@ -76,11 +77,10 @@ function Settings() {
                     {/* {console.log(data)} */}
                     {
                         data.clients && (
-
-
-                            <ClientsTable
+                            <Clients
                                 clients={data.clients}
                             />
+
                         )
 
 

@@ -4,8 +4,8 @@ import { useState } from "react";
 function Summary({ report_result, report_plans, report_recomendations, object_id }) {
 
     const [result, setResult] = useState(report_result)
-    const [plans, setPlans] = useState(report_result)
-    const [recomendations, setRecomendations] = useState(report_result)
+    const [plans, setPlans] = useState(report_plans)
+    const [recomendations, setRecomendations] = useState(report_recomendations)
 
 
 

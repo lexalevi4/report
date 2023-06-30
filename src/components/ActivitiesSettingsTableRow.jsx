@@ -70,6 +70,10 @@ function ActivitiesSettingsTableRow({ activity, create = false, object_id = 0, u
     const [files, setFiles] = useState(null);
     const [images, setImages] = useState(activity.images);
     const [images_disabled, setImages_disabled] = useState(false);
+    const [name, setName] = useState(activity.name);
+    const [date, setDate] = useState(activity.date);
+    const [price, setPrice] = useState(activity.price);
+    const [text, setText] = useState(activity.text);
 
 
 
@@ -128,16 +132,19 @@ function ActivitiesSettingsTableRow({ activity, create = false, object_id = 0, u
 
         //     price: { pattern: /\d+/g, message: "Должно" },
         // },
-
-        defaultValues: {
-            name: activity.name,
-            price: activity.price,
-            text: activity.text,
-            date: activity.date,
-            id: activity.id,
-            object_id: object_id,
-            status: activity.status
+        values: {
+                name: activity.name,
+                price: activity.price,
+                text: activity.text,
+                date: activity.date,
+                id: activity.id,
+                object_id: object_id,
+                // status: activity.status
         }
+
+        // defaultValues: {
+
+        // }
     },
 
     )
@@ -159,30 +166,30 @@ function ActivitiesSettingsTableRow({ activity, create = false, object_id = 0, u
 
 
 
-    const [status_open, setStatus_open] = useState(false);
-    const anchorRef = useRef(null);
-    const [selectedIndex, setSelectedIndex] = useState(activity.status);
+    // const [status_open, setStatus_open] = useState(false);
+    // const anchorRef = useRef(null);
+    // const [selectedIndex, setSelectedIndex] = useState(activity.status);
 
 
-    const handleMenuItemClick = (event, index) => {
-        // setSelectedIndex(index);
-        // setStatus_open(false);
-        setStatus(index)
-        // activity.status = index;
-    };
+    // const handleMenuItemClick = (event, index) => {
+    //     // setSelectedIndex(index);
+    //     // setStatus_open(false);
+    //     setStatus(index)
+    //     // activity.status = index;
+    // };
 
 
-    const handleToggle = () => {
-        setStatus_open((prevOpen) => !prevOpen);
-    };
+    // const handleToggle = () => {
+    //     setStatus_open((prevOpen) => !prevOpen);
+    // };
 
-    const handleClose = (event) => {
-        if (anchorRef.current && anchorRef.current.contains(event.target)) {
-            return;
-        }
+    // const handleClose = (event) => {
+    //     if (anchorRef.current && anchorRef.current.contains(event.target)) {
+    //         return;
+    //     }
 
-        setStatus_open(false);
-    };
+    //     setStatus_open(false);
+    // };
     const activeSwitchHandle = async (e) => {
         // console.log(e)
         let data = new FormData();
@@ -232,7 +239,9 @@ function ActivitiesSettingsTableRow({ activity, create = false, object_id = 0, u
 
                     <Controller
                         name="name"
+
                         control={control}
+
                         rules={{
                             validate: {
                                 required: (value) => {
@@ -243,10 +252,13 @@ function ActivitiesSettingsTableRow({ activity, create = false, object_id = 0, u
                         }}
                         render={({ field: { ref, ...rest } }) => (
                             <TextField
-                            label="Название"
+                                label="Название"
                                 // color="warning"
                                 id="outlined-multiline-flexible"
-                                defaultValue={activity.name}
+                                // defaultValue={activity.name}
+                                // value={name}
+                                // onChange={(e) => setName(e.target.value)}
+
                                 fullWidth
                                 {...rest}
                             />
@@ -290,9 +302,9 @@ function ActivitiesSettingsTableRow({ activity, create = false, object_id = 0, u
                         }}
                         render={({ field: { ref, ...rest } }) => (
                             <TextField
-                            label="Расход"
+                                label="Расход"
                                 id="outlined-multiline-flexible"
-                                defaultValue={activity.price}
+                                // defaultValue={activity.price}
                                 fullWidth
                                 {...rest}
                             />
@@ -311,7 +323,7 @@ function ActivitiesSettingsTableRow({ activity, create = false, object_id = 0, u
 
 
                 </TableCell>
-                <TableCell>
+                {/* <TableCell>
 
                     <Controller
                         name="status"
@@ -338,7 +350,7 @@ function ActivitiesSettingsTableRow({ activity, create = false, object_id = 0, u
                                 {statuses.map((option, index) => (
                                     <MenuItem
                                         value={option.id}
-                                        
+
                                         key={'select_' + option.name}
                                         // disabled={index === 2}
 
@@ -360,65 +372,13 @@ function ActivitiesSettingsTableRow({ activity, create = false, object_id = 0, u
                     )}
 
 
-                    {/* <ButtonGroup variant="outlined" ref={anchorRef} aria-label="split button">
-                        <Button >{statuses[activity.status]}</Button>
-                        <Button
-                            size="small"
-                            aria-controls={status_open ? 'split-button-menu' : undefined}
-                            aria-expanded={status_open ? 'true' : undefined}
-                            aria-label="Выберете статус"
-                            aria-haspopup="menu"
-                            onClick={handleToggle}
-                        >
-                            <ArrowDropDownIcon />
-                        </Button>
-                    </ButtonGroup>
-
-
-                    <Popper
-                        sx={{
-                            zIndex: 1,
-                        }}
-                        open={status_open}
-                        anchorEl={anchorRef.current}
-                        role={undefined}
-                        transition
-                        disablePortal
-                    >
-                        {({ TransitionProps, placement }) => (
-                            <Grow
-                                {...TransitionProps}
-                                style={{
-                                    transformOrigin:
-                                        placement === 'bottom' ? 'center top' : 'center bottom',
-                                }}
-                            >
-                                <Paper>
-                                    <ClickAwayListener onClickAway={handleClose}>
-                                        <MenuList id="split-button-menu" autoFocusItem>
-                                            {statuses.map((option, index) => (
-                                                <MenuItem
-                                                    key={option}
-                                                    // disabled={index === 2}
-
-                                                    selected={index === selectedIndex}
-                                                    onClick={(event) => handleMenuItemClick(event, index)}
-                                                >
-                                                    {option}
-                                                </MenuItem>
-                                            ))}
-                                        </MenuList>
-                                    </ClickAwayListener>
-                                </Paper>
-                            </Grow>
-                        )}
-                    </Popper> */}
-                </TableCell>
+               
+                </TableCell> */}
                 <TableCell>
 
                     <Controller
                         name="date"
-                        
+
                         control={control}
                         defaultValue={activity.date}
                         rules={{
@@ -432,7 +392,7 @@ function ActivitiesSettingsTableRow({ activity, create = false, object_id = 0, u
                         render={({ field: { ref, ...rest } }) => (
                             // <DatePicker />
                             <Input
-                            label="Дата"
+                                label="Дата"
                                 defaultValue={activity.date}
                                 type="date"
                                 {...rest}
@@ -468,22 +428,22 @@ function ActivitiesSettingsTableRow({ activity, create = false, object_id = 0, u
             >
                 <TableCell
                     className="align-top"
-                    colSpan={3}
+                    colSpan={4}
                 >
                     <Controller
                         name="text"
                         control={control}
-                        rules={{
-                            validate: {
-                                required: (value) => {
-                                    if (!value) return 'Обязательное поле';
-                                },
-                                // pattern: (value) => {
-                                //     let string = String(value)
-                                //     if (string.match(/\D/gi)) return 'Должно быть числом';
-                                // }
-                            },
-                        }}
+                        // rules={{
+                        //     validate: {
+                        //         required: (value) => {
+                        //             if (!value) return 'Обязательное поле';
+                        //         },
+                        //         // pattern: (value) => {
+                        //         //     let string = String(value)
+                        //         //     if (string.match(/\D/gi)) return 'Должно быть числом';
+                        //         // }
+                        //     },
+                        // }}
                         render={({ field: { ref, ...rest } }) => (
                             <TextField
                                 id="outlined-multiline-flexible"

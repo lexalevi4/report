@@ -38,10 +38,10 @@ function ActivitiesSettings({ basic_activities, object_id }) {
     const empty_activity = {
         id:0,
         "name":null,
-        "text":null,
+        "text":'',
         "status":1,
-        "date":null,
-        "price":null
+        "date":new Date().toISOString().split('T')[0],
+        "price":0
     }
 
     return (
@@ -86,17 +86,18 @@ function ActivitiesSettings({ basic_activities, object_id }) {
                             </TableCell>
 
                             <TableCell
+                              width={180}
                                 align="center"
                             >
                                 Расход
                             </TableCell>
 
-                            <TableCell
+                            {/* <TableCell
                                 align="center"
                                 width={150}
                             >
                                 Статус
-                            </TableCell>
+                            </TableCell> */}
 
                             <TableCell
                                 align="center"
@@ -106,7 +107,7 @@ function ActivitiesSettings({ basic_activities, object_id }) {
                             </TableCell>
                             <TableCell
                                 align="center"
-                                width={50}
+                                // width={50}
                             >
                                 Изображения
                             </TableCell>

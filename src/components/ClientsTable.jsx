@@ -1,20 +1,12 @@
 import { TableContainer, Paper, Table, TableHead, TableBody, TableRow, TableCell, Button, Divider, Typography } from "@mui/material";
-import { useState } from "react";
-import ReactAudioPlayer from "react-audio-player";
 import ClientsTableRow from "./ClientsTableRow";
 
 function ClientsTable({ clients }) {
-
-
-
-
-
-
-    // { console.log(clients) }
+    
     if (clients.lenght === 0) {
         return (<></>)
-
     }
+
     return (
         <>
 

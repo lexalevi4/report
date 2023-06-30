@@ -1,5 +1,5 @@
 import { Divider, Table, TableBody, TableCell, TableContainer, TableRow, Typography, Box, TextField, Button } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Slider from '@mui/joy/Slider';
 
 function Prices({ price, object_id, price_high, price_low, price_max, price_min }) {
@@ -7,9 +7,45 @@ function Prices({ price, object_id, price_high, price_low, price_max, price_min 
 
     const [min, setMin] = useState(price_min ? price_min : Math.floor(price * 0.8));
     const [low, setLow] = useState(price_low ? price_low : Math.floor(price * 0.9));
-    const [current, setCurrent] = useState(price);
+    const [current, setCurrent] = useState(Number(price));
     const [high, setHigh] = useState(price_high ? price_high : Math.floor(price * 1.1));
     const [max, setMax] = useState(price_max ? price_max : Math.floor(price * 1.2));
+
+
+    const handleLow = (value) => {
+
+        setLow(Number(value));
+
+        // console.log(min)
+    }
+
+
+
+
+    useEffect(function () {
+
+        if (current < low) {
+            setMin(current - ((low - current) / 5))
+        } else {
+            setMin(Number(low) - ((high - low) / 5))
+        }
+
+    }, [min, low])
+
+
+    useEffect(function () {
+        if (current > high) {
+            setMax(Number(current) + Number(((current - high) / 5)))
+        } else {
+            setMax(Number(high) + Number(((Number(high) - Number(low)) / 5)))
+        }
+    }, [high, max])
+
+    const handleHigh = (value) => {
+        setHigh(Number(value));
+    }
+
+
 
     const handleChange = (event, newValue) => {
         setCurrent(newValue);
@@ -72,30 +108,19 @@ function Prices({ price, object_id, price_high, price_low, price_max, price_min 
                                     <TableContainer>
                                         <Table>
                                             <TableBody>
+
                                                 <TableRow>
                                                     <TableCell>
                                                         <Typography>
-                                                            Конец
+                                                            Нижняя граница диапазона
+
                                                         </Typography>
                                                     </TableCell>
-                                                    <TableCell>
-                                                        <TextField
-                                                            value={max}
-                                                            onChange={(e) => setMax(e.target.value)}
-                                                        />
-                                                    </TableCell>
-                                                </TableRow>
-                                                <TableRow>
                                                     <TableCell>
                                                         <Typography>
                                                             Верхняя граница диапазона
                                                         </Typography>
-                                                    </TableCell>
-                                                    <TableCell>
-                                                        <TextField
-                                                            value={high}
-                                                            onChange={(e) => setHigh(e.target.value)}
-                                                        />
+
                                                     </TableCell>
                                                 </TableRow>
                                                 {/* <TableRow>
@@ -113,31 +138,20 @@ function Prices({ price, object_id, price_high, price_low, price_max, price_min 
                                                 </TableRow> */}
                                                 <TableRow>
                                                     <TableCell>
-                                                        <Typography>
-                                                            Нижняя граница диапазона
-                                                        </Typography>
-                                                    </TableCell>
-                                                    <TableCell>
                                                         <TextField
                                                             value={low}
-                                                            onChange={(e) => setLow(e.target.value)}
+                                                            onChange={(e) => handleLow(e.target.value)}
                                                         />
-                                                    </TableCell>
-                                                </TableRow>
-                                                <TableRow>
-                                                    <TableCell>
-                                                        <Typography>
-                                                            Начало
-                                                        </Typography>
                                                     </TableCell>
                                                     <TableCell>
                                                         <TextField
-                                                            value={min}
-                                                            onChange={(e) => setMin(e.target.value)}
+                                                            value={high}
+                                                            onChange={(e) => handleHigh(e.target.value)}
                                                         />
-                                                    </TableCell>
 
+                                                    </TableCell>
                                                 </TableRow>
+
                                                 <TableRow>
                                                     <TableCell>
 

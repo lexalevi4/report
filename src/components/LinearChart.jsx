@@ -1,7 +1,19 @@
-import { Divider, Typography } from "@mui/material";
+import { Badge, Divider, Typography } from "@mui/material";
 import ReactECharts from 'echarts-for-react';
+import { useEffect, useState } from "react";
 
-function LinearChart({ option, title }) {
+function LinearChart({ option, title, count = 0 }) {
+
+
+    const [counter, setCounter] = useState('')
+
+    useEffect(() => {
+        if (count > 0) {
+            setCounter(' (' + count + ')')
+        }
+
+    }, [count])
+
     return (
         <>
 
@@ -12,7 +24,10 @@ function LinearChart({ option, title }) {
             }}
 
                 variant='h6'
-            >{title}</Typography>
+            >
+
+                {title + counter}
+            </Typography>
 
             <Divider
                 className="mt-3"
@@ -23,6 +38,7 @@ function LinearChart({ option, title }) {
 
 
             <ReactECharts
+
                 // className="mt-3 p-5"
                 option={option}
             >

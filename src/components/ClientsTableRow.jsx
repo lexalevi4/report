@@ -10,7 +10,7 @@ function ClientsTableRow({ item, index }) {
 
 
 
-    console.log(item)
+    // console.log(item)
 
 
     const statuses = [
@@ -80,62 +80,17 @@ function ClientsTableRow({ item, index }) {
                     {item.src}
                 </TableCell>
                 <TableCell>
+                {item.status}
+                {item.comment &&(
+                    <>:
+                    <br />
+                    {/* <br /> */}
+                    {item.comment}
+                    </>
+                )}
 
 
-                    <ButtonGroup variant="outlined" ref={anchorRef} aria-label="split button">
-                        <Button >{statuses[status].name}</Button>
-                        <Button
-                            size="small"
-                            aria-controls={status_open ? 'split-button-menu' : undefined}
-                            aria-expanded={status_open ? 'true' : undefined}
-                            aria-label="Выберете статус"
-                            aria-haspopup="menu"
-                            onClick={handleToggle}
-                        >
-                            <ArrowDropDownIcon />
-                        </Button>
-                    </ButtonGroup>
-
-
-                    <Popper
-                        sx={{
-                            zIndex: 1,
-                        }}
-                        open={status_open}
-                        anchorEl={anchorRef.current}
-                        role={undefined}
-                        transition
-                        disablePortal
-                    >
-                        {({ TransitionProps, placement }) => (
-                            <Grow
-                                {...TransitionProps}
-                                style={{
-                                    transformOrigin:
-                                        placement === 'bottom' ? 'center top' : 'center bottom',
-                                }}
-                            >
-                                <Paper>
-                                    <ClickAwayListener onClickAway={handleClose}>
-                                        <MenuList id="split-button-menu" autoFocusItem>
-                                            {statuses.map((option, index) => (
-                                                <MenuItem
-                                                    key={option.name}
-                                                    // disabled={index === 2}
-
-                                                    selected={index === status}
-                                                    onClick={(event) => handleMenuItemClick(event, index)}
-                                                >
-                                                    {option.name}
-                                                </MenuItem>
-                                            ))}
-                                        </MenuList>
-                                    </ClickAwayListener>
-                                </Paper>
-                            </Grow>
-                        )}
-                    </Popper>
-
+                    
 
 
 
