@@ -1,33 +1,22 @@
-import { Avatar, Box, Button, Divider, Grid, Link, Paper, TextField, Typography } from "@mui/material";
+import { Box, Divider, Link, Paper } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Object from "../components/Object";
 
 import Stats from "../components/Stats";
-import ClientsTable from "../components/ClientsTable";
-import ActivitiesSettings from "../components/ActivitiesSettings";
-import Prices from "../components/Prices";
-import Summary from "../components/Summary";
 import Clients from "../components/Clients";
-import ActivitiesList from "../components/ActivitiesList";
 import PricesForClient from "../components/PricesForClient";
 import SummaryForClients from "../components/SummaryForClients";
 import { ReactComponent as LogoSvg } from '../images/logo.svg';
-
-
-
-
 import Rating from '@mui/material/Rating';
 import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
 import SentimentNeutralIcon from '@mui/icons-material/SentimentNeutral';
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
-
 import SentimentVerySatisfiedIcon from '@mui/icons-material/SentimentVerySatisfied';
-
-import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import Agent from "../components/Agent";
 import ActivitiesGallery from "../components/ActivitiesGallery";
+import Assessment from "../components/Assessment";
 
 const StyledRating = styled(Rating)(({ theme }) => ({
     '& .MuiRating-iconEmpty .MuiSvgIcon-root ': {
@@ -37,7 +26,6 @@ const StyledRating = styled(Rating)(({ theme }) => ({
 
 
 function Report() {
-
 
 
 
@@ -85,27 +73,47 @@ function Report() {
     };
 
 
+    const [rating, setRating] = useState(null)
+
+    const handleRating = async (event, newValue) => {
+
+
+        try {
+            await fetch('https://report.turbobroker.ru/report/assessment', {
+                method: 'post',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    // data: data,
+                    object_id: data.object.object_id,
+                    rating: newValue
+                    // tg_data: window.Telegram.WebApp.initData || null
+                })
+            })
+            // .then((response) => response.json())
+            // .then(
+            //     (data) => {
+            //         console.log(data);
+            //         // if (data.task === 'new') {
+            //         // activities.push(data.activity)
+            //         setActivities(data.activities);
+            //         // }else{}
+            //     }
+
+            //     // setIsFav(!isFav)
+            // )
+        } catch (e) {
+            console.log(e)
+
+        }
+
+        setRating(newValue);
+    }
 
     // const report_id = useParams()
     const [searchParams, setSearchParams] = useSearchParams();
     const navigate = useNavigate();
 
 
-    // const activities = [
-    //     {
-    //         active: true,
-    //         id: '1',
-    //         name: 'Расклейка',
-    //         text: 'Обклеили всё Обклеили всё Обклеили всё Обклеили всё Обклеили всё Обклеили всё',
-    //         status: 1,
-    //         price: 5000,
-    //         date: '2023-06-14'
-    //         // date: null
-
-
-    //     }
-    // ];
-    // const data = {};
     const [data, setData] = useState(null);
 
 
@@ -116,6 +124,12 @@ function Report() {
             .then(data => setData(data))
     }, [searchParams, setSearchParams, setData, navigate])
 
+
+    useEffect(() => {
+        document.title = 'Отчёт по вашему объекту';
+    }, []);
+
+
     if (data === null) {
         return (
             <>
@@ -123,7 +137,7 @@ function Report() {
         )
 
     }
-    console.log(data.object.price)
+    // console.log(data.object.price)
 
 
 
@@ -160,7 +174,7 @@ function Report() {
 
                     {/* {console.log(data)} */}
                     {
-                        data.clients && (
+                        (data.clients && data.clients.length > 0) && (
                             <Clients
                                 report={true}
                                 clients={data.clients}
@@ -181,21 +195,21 @@ function Report() {
                     /> */}
 
 
-                    {(data.object.price_high > 0 
-                    && data.object.price_low > 0
-                    && data.object.price_max > 0
-                    && data.object.price_min > 0
-                    
-                    ) && (
-                        <PricesForClient
-                            current={data.object.price}
-                            min={data.object.price_min}
-                            max={data.object.price_max}
-                            low={data.object.price_low}
-                            high={data.object.price_high}
-                        />
+                    {(data.object.price_high > 0
+                        && data.object.price_low > 0
+                        && data.object.price_max > 0
+                        && data.object.price_min > 0
 
-                    )}
+                    ) && (
+                            <PricesForClient
+                                current={data.object.price}
+                                min={data.object.price_min}
+                                max={data.object.price_max}
+                                low={data.object.price_low}
+                                high={data.object.price_high}
+                            />
+
+                        )}
 
 
 
@@ -239,15 +253,18 @@ function Report() {
                         }}
 
                     >
-                        <StyledRating
+                        <Assessment assessment={data.current_assessment} object_id={data.object.object_id} report={true} />
+                        {/* <StyledRating
                             max={3}
+                            value={rating}
+                            onChange={handleRating}
 
                             name="highlight-selected-only"
                             // defaultValue={4}
                             IconContainerComponent={IconContainer}
                             getLabelText={(value) => customIcons[value].label}
                             highlightSelectedOnly
-                        />
+                        /> */}
                     </Paper>
 
 
@@ -268,7 +285,7 @@ function Report() {
                         }}
 
                     >
-                        Данный отчёт предоставлен и сформирован в рамках действия Договора №... c <Link target="_blank" href='https://credit-center.ru'>ООО "Кредит-Центр"</Link>
+                        Данный отчёт предоставлен и сформирован в рамках действия договора c <Link target="_blank" href='https://credit-center.ru'>ООО "Кредит-Центр"</Link>
                     </footer>
 
                 </Box>

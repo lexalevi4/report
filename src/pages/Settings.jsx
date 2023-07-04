@@ -1,14 +1,14 @@
-import { Box, Button, Divider, Grid, TextField, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Object from "../components/Object";
 
 import Stats from "../components/Stats";
-import ClientsTable from "../components/ClientsTable";
 import ActivitiesSettings from "../components/ActivitiesSettings";
 import Prices from "../components/Prices";
 import Summary from "../components/Summary";
 import Clients from "../components/Clients";
+import AssessmentsList from "../components/AssessmentsList";
 
 function Settings() {
 
@@ -16,21 +16,24 @@ function Settings() {
     const [searchParams, setSearchParams] = useSearchParams();
     const navigate = useNavigate();
 
+    useEffect(() => {
+        document.title = 'Настройка отчёта';
+    }, []);
 
-    const activities = [
-        {
-            active: true,
-            id: '1',
-            name: 'Расклейка',
-            text: 'Обклеили всё Обклеили всё Обклеили всё Обклеили всё Обклеили всё Обклеили всё',
-            status: 1,
-            price: 5000,
-            date: '2023-06-14'
-            // date: null
+    // const activities = [
+    //     {
+    //         active: true,
+    //         id: '1',
+    //         name: 'Расклейка',
+    //         text: 'Обклеили всё Обклеили всё Обклеили всё Обклеили всё Обклеили всё Обклеили всё',
+    //         status: 1,
+    //         price: 5000,
+    //         date: '2023-06-14'
+    //         // date: null
 
 
-        }
-    ];
+    //     }
+    // ];
     // const data = {};
     const [data, setData] = useState(null);
 
@@ -49,7 +52,7 @@ function Settings() {
         )
 
     }
-    console.log(data.object.price)
+    // console.log(data.object.price)
 
 
 
@@ -107,6 +110,22 @@ function Settings() {
                         report_result={data.object.report_result}
                         object_id={data.object.object_id}
                     />
+
+                    {
+                        data.assessments.length > 0 && (
+                            <>
+
+                                
+
+                                <AssessmentsList assessments={data.assessments} />
+
+                            </>
+                        )
+                    }
+
+
+
+
 
                     <Box
                         height={300}

@@ -80,17 +80,17 @@ function ClientsTableRow({ item, index }) {
                     {item.src}
                 </TableCell>
                 <TableCell>
-                {item.status}
-                {item.comment &&(
-                    <>:
-                    <br />
-                    {/* <br /> */}
-                    {item.comment}
-                    </>
-                )}
+                    {item.status}
+                    {item.comment && (
+                        <>:
+                            <br />
+                            {/* <br /> */}
+                            {item.comment}
+                        </>
+                    )}
 
 
-                    
+
 
 
 
@@ -106,6 +106,10 @@ function ClientsTableRow({ item, index }) {
 
             </TableRow>
             <TableRow
+
+
+
+
                 style={
                     !show_history ?
                         {
@@ -122,72 +126,75 @@ function ClientsTableRow({ item, index }) {
                 <TableCell
                     colSpan={4}
                 >
-                    <TableContainer
-                        component={Paper}
-                    >
-                        <Table
-                        // component={'paper'}
+                    {show_history && (
+                        <TableContainer
+                            component={Paper}
                         >
-                            <TableHead>
-                                <TableRow>
+                            <Table
+                            // component={'paper'}
+                            >
+                                <TableHead>
+                                    <TableRow>
 
-                                    <TableCell>
-                                        Дата
-                                    </TableCell>
-                                    <TableCell>
-                                        Тип
-                                    </TableCell>
+                                        <TableCell>
+                                            Дата
+                                        </TableCell>
+                                        <TableCell>
+                                            Тип
+                                        </TableCell>
 
-                                    <TableCell>
-                                        Инфо
-                                    </TableCell>
+                                        <TableCell>
+                                            Инфо
+                                        </TableCell>
 
-                                </TableRow>
+                                    </TableRow>
 
-                            </TableHead>
-                            <TableBody>
-                                {
-                                    item.events.map(function (event, index) {
-                                        // console.log(event.created_at)
-                                        // console.log(Date(Number(event.created_at)))
-                                        var s = new Date(Number(event.created_at * 1000)).toLocaleDateString("ru-RU")
-                                        // console.log(s)
-                                        return (
-                                            <TableRow key={'event_' + index}>
+                                </TableHead>
+                                <TableBody>
+                                    {
+                                        item.events.map(function (event, index) {
+                                            // console.log(event.created_at)
+                                            // console.log(Date(Number(event.created_at)))
+                                            var s = new Date(Number(event.created_at * 1000)).toLocaleDateString("ru-RU")
+                                            // console.log(s)
+                                            return (
+                                                <TableRow key={'event_' + index}>
 
-                                                <TableCell>
-                                                    {
-                                                        s
-                                                    }
-                                                </TableCell>
-                                                <TableCell>
-                                                    {
-                                                        types[event.type]
-                                                    }
-                                                </TableCell>
+                                                    <TableCell>
+                                                        {
+                                                            s
+                                                        }
+                                                    </TableCell>
+                                                    <TableCell>
+                                                        {
+                                                            types[event.type]
+                                                        }
+                                                    </TableCell>
 
-                                                <TableCell>
-                                                    {
-                                                        event.record === '' ? event.text : (
-                                                            <ReactAudioPlayer
-                                                                src={event.record}
-                                                                autoPlay={false}
-                                                                controls
-                                                            />
-                                                        )
-                                                    }
-                                                </TableCell>
+                                                    <TableCell>
+                                                        {
+                                                            event.record === '' ? event.text : (
+                                                                <ReactAudioPlayer
+                                                                    src={event.record}
+                                                                    autoPlay={false}
+                                                                    controls
+                                                                />
+                                                            )
+                                                        }
+                                                    </TableCell>
 
-                                            </TableRow>
-                                        )
-                                    })
+                                                </TableRow>
+                                            )
+                                        })
 
-                                }
+                                    }
 
-                            </TableBody>
+                                </TableBody>
 
-                        </Table>
-                    </TableContainer>
+                            </Table>
+                        </TableContainer>
+                    )}
+
 
 
 

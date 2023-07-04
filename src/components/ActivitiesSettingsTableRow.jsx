@@ -1,7 +1,5 @@
 import { Box, Button, ButtonGroup, ClickAwayListener, Grow, IconButton, ImageList, ImageListItem, ImageListItemBar, Input, LinearProgress, MenuItem, MenuList, Paper, Popper, Select, Switch, TableCell, TableRow, TextField, Typography } from "@mui/material";
 import { useRef, useState } from "react";
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
-import { DatePicker } from "@mui/x-date-pickers";
 // import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
@@ -63,7 +61,7 @@ import { MuiFileInput } from "mui-file-input";
 // ];
 
 
-function ActivitiesSettingsTableRow({ activity, create = false, object_id = 0, updateActivity }) {
+function ActivitiesSettingsTableRow({ activity, create = false, object_id = 0, updateActivity, deleteActivity }) {
 
     const [status, setStatus] = useState(Number(activity.status));
     const [active, setActive] = useState(Boolean(activity.active));
@@ -74,22 +72,34 @@ function ActivitiesSettingsTableRow({ activity, create = false, object_id = 0, u
     const [date, setDate] = useState(activity.date);
     const [price, setPrice] = useState(activity.price);
     const [text, setText] = useState(activity.text);
+    const [available, setAvailable] = useState(true);
 
+
+    const handleDelete = () => {
+
+        const conf = window.confirm(`Удалить?`);
+        if (conf) {
+            deleteActivity(activity.id)
+            setAvailable(false)
+        }
+    }
 
 
 
 
     const delImage = async (id) => {
-        let data = new FormData();
-        data.append('activity', activity.id)
-        data.append('image_id', id)
+        const conf = window.confirm(`Удалить?`);
+        if (conf) {
+            let data = new FormData();
+            data.append('activity', activity.id)
+            data.append('image_id', id)
 
-        await fetch('https://report.turbobroker.ru/report/del-activity-image', {
-            method: 'POST',
-            body: data,
-        }).then(res => res.json())
-            .then(data => setImages(data.images))
-
+            await fetch('https://report.turbobroker.ru/report/del-activity-image', {
+                method: 'POST',
+                body: data,
+            }).then(res => res.json())
+                .then(data => setImages(data.images))
+        }
 
     }
 
@@ -133,13 +143,13 @@ function ActivitiesSettingsTableRow({ activity, create = false, object_id = 0, u
         //     price: { pattern: /\d+/g, message: "Должно" },
         // },
         values: {
-                name: activity.name,
-                price: activity.price,
-                text: activity.text,
-                date: activity.date,
-                id: activity.id,
-                object_id: object_id,
-                // status: activity.status
+            name: activity.name,
+            price: activity.price,
+            text: activity.text,
+            date: activity.date,
+            id: activity.id,
+            object_id: object_id,
+            // status: activity.status
         }
 
         // defaultValues: {
@@ -156,40 +166,15 @@ function ActivitiesSettingsTableRow({ activity, create = false, object_id = 0, u
 
     // console.log(control._formState.isValid)
     const onSubmit = (data) => {
-        console.log(data)
+        // console.log(data)
         updateActivity(data)
-        if (create) {
-            // control._fields
-            // reset()
-        }
+        // if (create) {
+        //     // control._fields
+        //     // reset()
+        // }
     }
 
 
-
-    // const [status_open, setStatus_open] = useState(false);
-    // const anchorRef = useRef(null);
-    // const [selectedIndex, setSelectedIndex] = useState(activity.status);
-
-
-    // const handleMenuItemClick = (event, index) => {
-    //     // setSelectedIndex(index);
-    //     // setStatus_open(false);
-    //     setStatus(index)
-    //     // activity.status = index;
-    // };
-
-
-    // const handleToggle = () => {
-    //     setStatus_open((prevOpen) => !prevOpen);
-    // };
-
-    // const handleClose = (event) => {
-    //     if (anchorRef.current && anchorRef.current.contains(event.target)) {
-    //         return;
-    //     }
-
-    //     setStatus_open(false);
-    // };
     const activeSwitchHandle = async (e) => {
         // console.log(e)
         let data = new FormData();
@@ -221,7 +206,13 @@ function ActivitiesSettingsTableRow({ activity, create = false, object_id = 0, u
         { name: 'Отменено', id: 4 },
 
     ]
-    window.control = control
+    // window.control = control
+
+    if (!available) {
+        return (<></>)
+    }
+
+
     return (
         <>
 
@@ -291,9 +282,9 @@ function ActivitiesSettingsTableRow({ activity, create = false, object_id = 0, u
                         control={control}
                         rules={{
                             validate: {
-                                required: (value) => {
-                                    if (!value) return 'Обязательное поле';
-                                },
+                                // required: (value) => {
+                                //     if (!value) return 'Обязательное поле';
+                                // },
                                 pattern: (value) => {
                                     let string = String(value)
                                     if (string.match(/\D/gi)) return 'Должно быть числом';
@@ -420,6 +411,17 @@ function ActivitiesSettingsTableRow({ activity, create = false, object_id = 0, u
                     >
 
                         Сохранить
+                    </Button>
+                </TableCell>
+                <TableCell>
+                    <Button
+                        color="error"
+                        // type="submit"
+                        onClick={handleDelete}
+                    // disabled={Object.keys(control._formState.errors).length > 0}
+                    >
+
+                        Удалить
                     </Button>
                 </TableCell>
             </TableRow>

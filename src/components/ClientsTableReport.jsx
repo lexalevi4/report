@@ -1,11 +1,29 @@
-import { Divider, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { Box, Button, Divider, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
 import ClientsTableRowReport from "./ClientsTableRowReport";
+import { useEffect, useState } from "react";
 
 function ClientsTableReport({ clients }) {
 
-    console.log(clients)
+    // const [rows, setRows] = useState(5);
+    const rows = 4;
+    // console.log(clients)
+    const [showAll, setShowAll] = useState(false)
+    const [clientsToShow, setClientsToShow] = useState(clients.slice(0, rows))
 
-    if (clients.lenght === 0) {
+
+    useEffect(() => {
+
+        if (showAll) {
+            setClientsToShow(clients)
+        } else {
+            setClientsToShow(clients.slice(0, rows))
+        }
+    }, [showAll])
+
+
+    // console.log(clients.length)
+
+    if (clients.length === 0) {
         return (<></>)
     }
 
@@ -50,9 +68,10 @@ function ClientsTableReport({ clients }) {
                 </TableHead>
                 <TableBody>
                     {
-                        clients.map(function (item, index) {
+                        clientsToShow.map(function (item, index) {
                             return (
                                 <ClientsTableRowReport
+                                    key={'client_in_report_' + index}
                                     item={item}
 
                                 />
@@ -67,6 +86,39 @@ function ClientsTableReport({ clients }) {
                             )
                         })
                     }
+
+                    {
+                        (clients.length > rows) &&
+                        (<>
+                            <TableRow>
+                                <TableCell
+                                    colSpan={2}
+                                >
+                                    <Box
+                                        style={{
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+
+                                        }}
+                                    >
+                                        <Button
+                                            variant="text"
+                                            onClick={() => setShowAll(!showAll)}
+
+                                        >
+                                            {showAll ? 'Скрыть' : 'Показать все'}
+
+
+                                        </Button>
+                                    </Box>
+
+                                </TableCell>
+                            </TableRow>
+                        </>)
+                    }
+
+
 
                 </TableBody>
 

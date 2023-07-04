@@ -1,12 +1,20 @@
 import { Box, Divider, Grid, Paper, Typography } from "@mui/material";
 
 function SummaryForClients({ plans = '', recomendations = '', result = '' }) {
+
+
+
+    if (plans === '' && recomendations === '' && result === '') {
+        return (<>
+        </>)
+    }
+
     return (<>
 
         <Box
             height={100}
         ></Box>
-      
+
         <Divider
             className="my-10"
         />

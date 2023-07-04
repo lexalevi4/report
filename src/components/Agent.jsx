@@ -1,13 +1,11 @@
 import { Avatar, Box, Button, Divider, Typography } from '@mui/material';
 import { ReactComponent as WhatsappSvg } from '../images/whatsapp.svg';
 import { ReactComponent as TelegramSvg } from '../images/telegram.svg';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
-import MessageIcon from '@mui/icons-material/Message';
 function Agent({ user }) {
 
 
-    console.log(window.innerWidth);
+    // console.log(window.innerWidth);
 
     return (<>
         <Box
@@ -55,9 +53,9 @@ function Agent({ user }) {
 
 
         <Box
-            className=' items-center flex'
+            className=' items-center flex text-center'
             style={{
-                // display: 'flex',
+               
                 alignItems: 'center',
                 justifyContent: 'center',
             }}
@@ -94,7 +92,7 @@ function Agent({ user }) {
                 {user.phone}
             </Button>
         </Box>
-        <Box
+        {/* <Box
             className=' items-center flex m-0'
             style={{
                 // display: 'flex',
@@ -141,7 +139,7 @@ function Agent({ user }) {
 
 
 
-        </Box>
+        </Box> */}
     </>);
 }
 

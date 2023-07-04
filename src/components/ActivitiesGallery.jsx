@@ -40,7 +40,7 @@ function ActivitiesGallery({ activities }) {
             })
         }
         setImages(gallery)
-        console.log(images)
+        // console.log(images)
 
     }, [activities])
 
@@ -50,6 +50,12 @@ function ActivitiesGallery({ activities }) {
         setPrice(images[currentIndex].price)
         setName(images[currentIndex].name)
 
+    }
+    if (active_count === 0) {
+        return (
+            <>
+            </>
+        )
     }
 
     return (
@@ -164,7 +170,7 @@ function ActivitiesGallery({ activities }) {
                                         />
 
 
-                                        
+
                                     </Paper>
                                 </div>
 

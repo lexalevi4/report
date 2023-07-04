@@ -1,15 +1,17 @@
 import { Box, Paper, TableContainer, Table, TableBody, TableRow, TableCell, Button } from "@mui/material"
 import { useEffect, useState } from "react"
-import parse, { attributesToProps } from 'html-react-parser';
+import parse from 'html-react-parser';
 
 function ObjectTable({ object }) {
 
     const [params, setParams] = useState([])
 
     const [showDesc, setShowDesc] = useState(false);
+    const [youtube, setYoutube] = useState('');
 
     useEffect(() => {
-        console.log(object.fields)
+
+
 
         let table = []
         let addrr_field = object.fields.filter((item) => {
@@ -17,9 +19,11 @@ function ObjectTable({ object }) {
         })
         // console.log(addrr_field)
         if (addrr_field.length > 0) {
+            let address = JSON.parse(addrr_field[0].value)
+            // console.log(address)
             table.push({
                 name: "Адрес",
-                value: JSON.parse(addrr_field[0].value).replace(/^Россия, /gi, '')
+                value: address[0].value.replace(/^Россия, /gi, '')
 
             })
         }
@@ -75,6 +79,17 @@ function ObjectTable({ object }) {
             living_area = living_square_field[0].value
         }
 
+
+        let kitchen_square_field = object.fields.filter((item) => {
+            return (item.alias === 'kitchen_square');
+        })
+        // console.log(addrr_field)
+        if (kitchen_square_field.length > 0) {
+            kithchen_area = kitchen_square_field[0].value
+        }
+
+
+
         if (total_area !== '' || living_area !== '' || kithchen_area !== '') {
 
             table.push({
@@ -97,6 +112,37 @@ function ObjectTable({ object }) {
                 value: area_square_field[0].value
 
             })
+        }
+
+        let floor = '';
+        let floors_count = '';
+
+
+
+        let floor_field = object.fields.filter((item) => {
+            return (item.alias === 'floor');
+        })
+        // console.log(addrr_field)
+        if (floor_field.length > 0) {
+            floor = floor_field[0].value
+        }
+
+        let floors_count_field = object.fields.filter((item) => {
+            return (item.alias === 'floors_count');
+        })
+        // console.log(addrr_field)
+        if (floors_count_field.length > 0) {
+            floors_count = floors_count_field[0].value
+        }
+        if (floor !== '' || floors_count !== '') {
+
+            table.push({
+                name: "Этаж/Этажность",
+                value: floor + " / " + floors_count
+
+            })
+
+
         }
 
 

@@ -18,3 +18,24 @@
     width: 100%;
     height: 100%;
 }
+
+.image-gallery {
+    width: 100%;
+    height: auto;
+}
+
+.image-gallery-slide img {
+    width: 100%;
+    /* height: 60vh; */
+    max-height: 60%;
+    object-fit: contain;
+    /* overflow: hidden; */
+    overflow: hidden;
+    object-position: center center;
+}
+.image-gallery-content .image-gallery-slide .image-gallery-image {
+    max-height: 60vh;
+}
+.fullscreen .image-gallery-slide img {
+    max-height: 100vh;
+}

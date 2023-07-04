@@ -1,4 +1,4 @@
-import { Button, Divider, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material";
+import { Button, Divider, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 
 import LinearChart from "./LinearChart";
 import { useEffect, useState } from "react";
@@ -8,9 +8,9 @@ function Stats({ stats, report = false }) {
 
     // const data = [{ "date": "2023-04-26", "views_count": 286, "contacts_count": 2, "favorites_count": 29 }, { "date": "2023-04-27", "views_count": 412, "contacts_count": 3, "favorites_count": 37 }, { "date": "2023-04-28", "views_count": 193, "contacts_count": 5, "favorites_count": 18 }, { "date": "2023-04-29", "views_count": 165, "contacts_count": 4, "favorites_count": 9 }, { "date": "2023-04-30", "views_count": 129, "contacts_count": 3, "favorites_count": 10 }, { "date": "2023-05-01", "views_count": 132, "contacts_count": 1, "favorites_count": 12 }, { "date": "2023-05-02", "views_count": 120, "contacts_count": 3, "favorites_count": 9 }, { "date": "2023-05-03", "views_count": 122, "contacts_count": 1, "favorites_count": 11 }, { "date": "2023-05-04", "views_count": 95, "contacts_count": 1, "favorites_count": 8 }, { "date": "2023-05-05", "views_count": 90, "contacts_count": 2, "favorites_count": 8 }, { "date": "2023-05-06", "views_count": 79, "contacts_count": 3, "favorites_count": 6 }, { "date": "2023-05-07", "views_count": 87, "contacts_count": 1, "favorites_count": 5 }, { "date": "2023-05-08", "views_count": 77, "contacts_count": 1, "favorites_count": 6 }, { "date": "2023-05-09", "views_count": 55, "contacts_count": 1, "favorites_count": 3 }, { "date": "2023-05-10", "views_count": 56, "contacts_count": 0, "favorites_count": 4 }, { "date": "2023-05-11", "views_count": 93, "contacts_count": 2, "favorites_count": 9 }, { "date": "2023-05-12", "views_count": 82, "contacts_count": 3, "favorites_count": 4 }, { "date": "2023-05-13", "views_count": 90, "contacts_count": 4, "favorites_count": 8 }, { "date": "2023-05-14", "views_count": 97, "contacts_count": 0, "favorites_count": 8 }, { "date": "2023-05-15", "views_count": 86, "contacts_count": 1, "favorites_count": 5 }, { "date": "2023-05-16", "views_count": 71, "contacts_count": 0, "favorites_count": 5 }, { "date": "2023-05-17", "views_count": 67, "contacts_count": 0, "favorites_count": 4 }, { "date": "2023-05-18", "views_count": 56, "contacts_count": 2, "favorites_count": 5 }, { "date": "2023-05-19", "views_count": 82, "contacts_count": 2, "favorites_count": 10 }, { "date": "2023-05-20", "views_count": 66, "contacts_count": 4, "favorites_count": 3 }, { "date": "2023-05-21", "views_count": 79, "contacts_count": 1, "favorites_count": 4 }, { "date": "2023-05-22", "views_count": 46, "contacts_count": 0, "favorites_count": 2 }, { "date": "2023-05-23", "views_count": 37, "contacts_count": 3, "favorites_count": 1 }, { "date": "2023-05-24", "views_count": 31, "contacts_count": 1, "favorites_count": 0 }, { "date": "2023-05-25", "views_count": 25, "contacts_count": 0, "favorites_count": 0 }, { "date": "2023-05-26", "views_count": 21, "contacts_count": 0, "favorites_count": 0 }, { "date": "2023-05-27", "views_count": 35, "contacts_count": 1, "favorites_count": 0 }, { "date": "2023-05-28", "views_count": 32, "contacts_count": 1, "favorites_count": 2 }, { "date": "2023-05-29", "views_count": 35, "contacts_count": 1, "favorites_count": 5 }, { "date": "2023-05-30", "views_count": 26, "contacts_count": 2, "favorites_count": 0 }, { "date": "2023-05-31", "views_count": 1, "contacts_count": 0, "favorites_count": 0 }, { "date": "2023-06-02", "views_count": 1, "contacts_count": 0, "favorites_count": 0 }, { "date": "2023-06-03", "views_count": 1, "contacts_count": 0, "favorites_count": 0 }, { "date": "2023-06-04", "views_count": 3, "contacts_count": 0, "favorites_count": 1 }, { "date": "2023-06-06", "views_count": 1, "contacts_count": 0, "favorites_count": 0 }, { "date": "2023-06-07", "views_count": 1, "contacts_count": 0, "favorites_count": 0 }, { "date": "2023-06-08", "views_count": 1, "contacts_count": 0, "favorites_count": 1 }, { "date": "2023-06-13", "views_count": 1, "contacts_count": 0, "favorites_count": 0 }, { "date": "2023-06-15", "views_count": 8, "contacts_count": 0, "favorites_count": 3 }, { "date": "2023-06-16", "views_count": 10, "contacts_count": 0, "favorites_count": 2 }, { "date": "2023-06-17", "views_count": 15, "contacts_count": 0, "favorites_count": 2 }, { "date": "2023-06-18", "views_count": 10, "contacts_count": 0, "favorites_count": 0 }, { "date": "2023-06-19", "views_count": 6, "contacts_count": 0, "favorites_count": 2 }];
 
-    const [avito_active, setAvitoActive] = useState(false)
-    const [cian_active, setCianActive] = useState(false)
-    const [yandex_active, setYandexActive] = useState(false)
+    // const [avito_active, setAvitoActive] = useState(false)
+    // const [cian_active, setCianActive] = useState(false)
+    // const [yandex_active, setYandexActive] = useState(false)
     const [srcs, setSrcs] = useState([]);
     const [calls_srcs, setCalls_srcs] = useState([]);
     const [views_series, setViews_series] = useState([]);
@@ -69,11 +69,11 @@ function Stats({ stats, report = false }) {
         let current_fav_series = []
         let current_calls_srcs = []
         if (avito_filtered.length > 0) {
-            console.log('avito')
+            // console.log('avito')
             // setSrcs([...srcs, "Авито"])
 
             current_srcs.push("Авито");
-            setAvitoActive(true);
+            // setAvitoActive(true);
             current_views_series.push({
                 name: 'Авито',
                 data: stats.avito.views,
@@ -99,11 +99,11 @@ function Stats({ stats, report = false }) {
 
 
         if (cian_filtered.length > 0) {
-            console.log('cian')
+            // console.log('cian')
             // setSrcs([...srcs, "Циан"])
             current_srcs.push("Циан");
 
-            setCianActive(true);
+            // setCianActive(true);
             current_views_series.push({
                 name: 'Циан',
                 data: stats.cian.views,
@@ -122,7 +122,7 @@ function Stats({ stats, report = false }) {
             // srcs.push("");
             current_srcs.push("Яндекс");
             // setSrcs([...srcs, "Яндекс"])
-            setYandexActive(true)
+            // setYandexActive(true)
             current_views_series.push({
                 name: 'Яндекс',
                 data: stats.yandex.views,
@@ -152,10 +152,10 @@ function Stats({ stats, report = false }) {
 
         }
 
-        console.log("тут")
-        console.log(current_srcs)
-        console.log(current_views_series)
-        console.log(current_calls_series)
+        // console.log("тут")
+        // console.log(current_srcs)
+        // console.log(current_views_series)
+        // console.log(current_calls_series)
         setSrcs(current_srcs);
         setViews_series(current_views_series);
         setCalls_series(current_calls_series);
@@ -249,7 +249,7 @@ function Stats({ stats, report = false }) {
         let additional_srcs = stats.calls.filter(function (item) {
             return (item.src !== 'Авито' && item.src !== 'Циан' && item.src !== 'Яндекс');
         })
-        console.log(additional_srcs)
+        // console.log(additional_srcs)
         additional_srcs.map(function (item) {
             current_table.push({
                 'src': item.src,
@@ -261,15 +261,15 @@ function Stats({ stats, report = false }) {
             total_calls = total_calls + Number(item.count)
         });
 
-        if (stats.total.avito_active) {
-            current_table.push({
-                'src': "Итого",
-                'link': null,
-                'views': total_views,
-                'calls': total_calls,
-                'fav': null
-            })
-        }
+        // if (stats.total.avito_active) {
+        //     current_table.push({
+        //         'src': "Итого",
+        //         'link': null,
+        //         'views': total_views,
+        //         'calls': total_calls,
+        //         'fav': null
+        //     })
+        // }
         setViews_count(total_views);
         setCalls_count(total_calls);
 
@@ -345,9 +345,9 @@ function Stats({ stats, report = false }) {
 
     // const table_stats = []
 
-    console.log(srcs)
-    console.log(fav_data)
-    console.log(views_series)
+    // console.log(srcs)
+    // console.log(fav_data)
+    // console.log(views_series)
 
     // if (stats.total.avito_id > 0) {
     //     table_stats.push({

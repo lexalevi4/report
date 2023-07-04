@@ -186,6 +186,10 @@
   position: static
 }
 
+.relative {
+  position: relative
+}
+
 .m-0 {
   margin: 0px
 }
@@ -305,6 +309,11 @@
 .px-4 {
   padding-left: 1rem;
   padding-right: 1rem
+}
+
+.py-10 {
+  padding-top: 2.5rem;
+  padding-bottom: 2.5rem
 }
 
 .pb-0 {

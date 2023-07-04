@@ -26,7 +26,7 @@ function Clients({ clients, report = false }) {
 
         let unique_srcs = [...new Set(all_srcs)];
         let unique_statuses = [...new Set(all_statuses)];
-        console.log(unique_srcs); // unique is ['a', 1, 2, '1']
+        // console.log(unique_srcs); // unique is ['a', 1, 2, '1']
 
         unique_srcs.map(function (item) {
             let current_statuses = []
@@ -70,11 +70,16 @@ function Clients({ clients, report = false }) {
 
 
         setSummary(table);
-        console.log(table);
+        // console.log(table);
 
 
     }, [clients]
     )
+
+    if (clients.length === 0) {
+        return (<>
+        </>)
+    }
 
     return (
         <>
