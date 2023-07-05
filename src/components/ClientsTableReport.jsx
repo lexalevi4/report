@@ -18,7 +18,7 @@ function ClientsTableReport({ clients }) {
         } else {
             setClientsToShow(clients.slice(0, rows))
         }
-    }, [showAll])
+    }, [showAll, clients])
 
 
     // console.log(clients.length)
@@ -42,7 +42,10 @@ function ClientsTableReport({ clients }) {
             }}
 
             variant='h5'
-        >Заявки</Typography>
+        >
+
+            {'Заявки (' + clients.length + ')'}
+        </Typography>
 
         <TableContainer
             component={Paper}

@@ -55,7 +55,7 @@ function Agent({ user }) {
         <Box
             className=' items-center flex text-center'
             style={{
-               
+
                 alignItems: 'center',
                 justifyContent: 'center',
             }}
@@ -80,13 +80,14 @@ function Agent({ user }) {
 
 
             <Button
-                startIcon={<LocalPhoneIcon />}
+                
+                // startIcon={<LocalPhoneIcon />}
                 style={{
                     textTransform: 'none',
                 }}
                 href={'tel:' + user.phone}
 
-                className="mx-2 my-8"
+                className="mx-2 my-8 text-xl"
                 variant="text"
             >
                 {user.phone}

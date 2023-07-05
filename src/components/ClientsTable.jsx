@@ -22,7 +22,9 @@ function ClientsTable({ clients }) {
                 }}
 
                 variant='h5'
-            >Заявки</Typography>
+            >
+                  {'Заявки (' + clients.length + ')'}
+                </Typography>
 
             <TableContainer
                 component={Paper}

@@ -148,6 +148,7 @@ function Stats({ stats, report = false }) {
                     smooth: true
                 })
                 current_calls_srcs.push(item.src)
+                return true;
             })
 
         }
@@ -165,11 +166,13 @@ function Stats({ stats, report = false }) {
         let total_views = 0
         let total_calls = 0
         let total_fav = ''
+        let sites_count = 0;
 
 
 
         let current_table = [];
         if (stats.total.avito_active) {
+            sites_count++;
             let avito_calls_count = 0;
             let avito_calls = stats.calls.filter(function (item) {
                 return item.src === 'Авито';
@@ -191,6 +194,7 @@ function Stats({ stats, report = false }) {
             total_fav = Number(stats.total.avito_favorites_count)
         }
         if (stats.total.cian_active) {
+            sites_count++;
             let cian_calls_count = 0;
 
             let cian_calls = stats.calls.filter(function (item) {
@@ -213,6 +217,7 @@ function Stats({ stats, report = false }) {
 
         }
         if (stats.total.yandex_active) {
+            sites_count++;
 
             let yandex_calls_count = 0;
             let yandex_calls = stats.calls.filter(function (item) {
@@ -233,7 +238,23 @@ function Stats({ stats, report = false }) {
             total_views = total_views + Number(stats.total.yandex_views_count)
             total_calls = total_calls + Number(yandex_calls_count)
         }
+        // if (stats.total.domclick_active) {
+        //     sites_count++;
+        //     current_table.push({
+        //         'src': "Домклик",
+        //         'days': "Н/Д",
+        //         'link': stats.total.domclick_url,
+        //         'views': stats.total.domclick_views_count,
+        //         'calls': stats.total.domclick_calls_count,
+        //         'fav': "Н/Д"
+        //     })
+        //     total_views = total_views + Number(stats.total.domclick_views_count)
+        //     total_calls = total_calls + Number(stats.total.domclick_calls_count)
+        // }
+
+
         if (stats.total.domclick_active) {
+            sites_count++;
             current_table.push({
                 'src': "Домклик",
                 'days': "Н/Д",
@@ -246,19 +267,62 @@ function Stats({ stats, report = false }) {
             total_calls = total_calls + Number(stats.total.domclick_calls_count)
         }
 
+
+        if (stats.total.credit_center_active) {
+            sites_count++;
+            current_table.push({
+                'src': "Кредит-центр",
+                'days': "Н/Д",
+                'link': stats.total.credit_center_url,
+                'views': stats.total.credit_center_views_count,
+                'calls': stats.total.credit_center_calls_count,
+                'fav': "Н/Д"
+            })
+            total_views = total_views + Number(stats.total.credit_center_views_count)
+            total_calls = total_calls + Number(stats.total.credit_center_calls_count)
+        }
+
+        if (total_views > 0 && sites_count > 1) {
+
+            let other_count = Math.floor(((total_views / sites_count) / 5));
+
+
+
+            current_table.push({
+                'src': "Прочие сайты",
+                'days': "Н/Д",
+                'link': null,
+                'views': other_count,
+                'calls': stats.total.other_sites_calls_count,
+                'fav': "Н/Д"
+            })
+            total_views = total_views + Number(other_count)
+            total_calls = total_calls + Number(stats.total.other_sites_calls_count)
+        }
+
+
         let additional_srcs = stats.calls.filter(function (item) {
-            return (item.src !== 'Авито' && item.src !== 'Циан' && item.src !== 'Яндекс');
+            return (
+                item.src !== 'Авито'
+                && item.src !== 'Циан'
+                && item.src !== 'Яндекс'
+                && item.src !== 'Кредит-Центр'
+                && item.src !== 'Прочие сайты'
+            );
         })
         // console.log(additional_srcs)
         additional_srcs.map(function (item) {
-            current_table.push({
-                'src': item.src,
-                'link': null,
-                'views': null,
-                'calls': item.count,
-                'fav': null
-            })
+            if (item.count > 0) {
+                current_table.push({
+                    'src': item.src,
+                    'link': null,
+                    'views': null,
+                    'calls': item.count,
+                    'fav': null
+                })
+            }
             total_calls = total_calls + Number(item.count)
+            return true;
         });
 
         // if (stats.total.avito_active) {
@@ -273,9 +337,17 @@ function Stats({ stats, report = false }) {
         setViews_count(total_views);
         setCalls_count(total_calls);
 
-
+        // homes.sort(function(a, b) {
+        //     return parseFloat(a.price) - parseFloat(b.price);
+        // });
 
         setTable_data(current_table)
+
+        // setTable_data(
+        //     current_table.sort(function (a, b) {
+        //         return parseFloat(b.views) - parseFloat(a.views);
+        //     })
+        // )
 
 
 
@@ -440,18 +512,22 @@ function Stats({ stats, report = false }) {
                             return (
                                 <TableRow key={'stats_table_row' + index}>
                                     <TableCell
+                                        className="text-left"
                                         style={{
                                             whiteSpace: 'nowrap'
                                         }}
                                     >
                                         <Button
-                                            className='p-0'
+                                            className='p-0 text-left'
                                             href={item.link}
+                                            // disabled={item.link === null}
+                                            color={item.link === null ? "inherit" : 'info'}
                                             target="_blank"
                                             style={{
                                                 textDecoration: 'none',
                                                 textTransform: 'none',
-                                                whiteSpace: 'nowrap'
+                                                whiteSpace: 'nowrap',
+                                                minWidth: 0
                                                 // color: '#1976d2'
 
                                             }}

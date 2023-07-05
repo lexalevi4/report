@@ -61,7 +61,7 @@ function Summary({ report_result, report_plans, report_recomendations, object_id
                     <Box>
                         <TextField
                             rows={5}
-                            label="Итоги"
+                            label="Сделано"
                             value={result}
                             onChange={(e) => setResult(e.target.value)}
                             multiline
